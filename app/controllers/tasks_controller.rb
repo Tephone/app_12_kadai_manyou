@@ -23,15 +23,17 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
 
-    respond_to do |format|
+    #respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
+        redirect_to task_path(@task.id), notice: "Task was successfully created."
+        #format.html { redirect_to @task, notice: "Task was successfully created." }
+        #format.json { render :show, status: :created, location: @task }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        render :new
+        #format.html { render :new, status: :unprocessable_entity }
+        #format.json { render json: @task.errors, status: :unprocessable_entity }
       end
-    end
+    #end
   end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
@@ -64,6 +66,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :content, :user_id)
+      params.require(:task).permit(:title, :content)
     end
 end
