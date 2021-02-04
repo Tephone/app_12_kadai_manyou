@@ -35,6 +35,26 @@ RSpec.describe 'タスク管理機能', type: :system do
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        # ここに実装する
+        #Task.create(id: 1, title: "task3", content: "task3_content")
+        #Task.create(id: 2, title: "task4", content: "task4_content")
+        visit tasks_path
+        task = Task.all.order(id: :desc)
+        expect(task[0].id).to have_content '2'
+        expect(task[1].id).to have_content '1'
+      end
+    end
+    context 'タスクが期日の降順で並んでいる場合' do
+      it '期日に最も余裕のあるものが一番上に表示される' do
+        visit tasks_path
+        click_on '終了期限(降順)でソートする'
+        task = Task.all.order(expired_at: :desc)
+        expect(task[0].expired_at).to have_content '2021-02-19 00:00:00 +0900'
+        expect(task[1].expired_at).to have_content '2021-02-01 00:00:00 +0900'
+      end
+    end
   end
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
@@ -44,20 +64,5 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'title1'
        end
      end
-     context 'タスクが作成日時の降順に並んでいる場合' do
-      it '新しいタスクが一番上に表示される' do
-        # ここに実装する
-        #Task.create(id: 1, title: "task3", content: "task3_content")
-        #Task.create(id: 2, title: "task4", content: "task4_content")
-        #binding.pry
-        visit tasks_path
-        #task_list = all('.task_row') 
-        task = Task.all.order(id: :desc)
-        #binding.pry
-        expect(task[0].title).to have_content 'title2'
-        expect(task[1].title).to have_content 'title1'
-
-      end
-    end
   end
 end
