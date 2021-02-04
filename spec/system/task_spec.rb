@@ -3,7 +3,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
     @task1 = FactoryBot.create(:task)
-    task2 = FactoryBot.create(:second_task)
+    @task2 = FactoryBot.create(:second_task)
   end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
@@ -13,7 +13,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in 'Title',with: 'test3'
         fill_in 'Content',with: 'test3_content'
         # binding.pry
-        click_on 'Create Task'
+        click_on '登録する'
         #binding.pry
         # click_on 'content'
         #visit task_path
@@ -44,5 +44,20 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'title1'
        end
      end
+     context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        # ここに実装する
+        #Task.create(id: 1, title: "task3", content: "task3_content")
+        #Task.create(id: 2, title: "task4", content: "task4_content")
+        #binding.pry
+        visit tasks_path
+        #task_list = all('.task_row') 
+        task = Task.all.order(id: :desc)
+        #binding.pry
+        expect(task[0].title).to have_content 'title2'
+        expect(task[1].title).to have_content 'title1'
+
+      end
+    end
   end
 end
