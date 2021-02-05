@@ -9,13 +9,10 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
         visit new_task_path
-        #binding.pry
         fill_in 'Title',with: 'test3'
         fill_in 'Content',with: 'test3_content'
-        # binding.pry
+        #fill_in  'Expired at',with: '2021-02-10 12:22:22 +0900'
         click_on '登録する'
-        #binding.pry
-        # click_on 'content'
         #visit task_path
         expect(page).to have_content 'test3'
       end
@@ -24,9 +21,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        # テストで使用するためのタスクを作成
         #task = FactoryBot.create(:task, title: 'title1')
-        # タスク一覧ページに遷移
         visit tasks_path
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
         # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）

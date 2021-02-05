@@ -2,13 +2,24 @@
 
 <h1><%= t('view.task') %></h1>
 
+<p>search</p>
+<%= form_tag(tasks_path, method: :get) do%>
+  <div>タイトル検索</div>
+  <%= text_field_tag :title_search %><br>
+  <div>ステータス検索</div>
+  <%= text_field_tag :status_search %><br><br>
+  <%= submit_tag 'search'%>
+<% end %>
+
+
 <table>
   <thead>
     <tr>
       <th>Title</th>
       <th>Content</th>
       <th>Expired_at</th>
-      <th colspan="3"></th>
+      <th>Status</th>
+      <th colspan="4"></th>
     </tr>
   </thead>
   <tbody>
@@ -17,6 +28,7 @@
         <td><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.expired_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= task.status %></td>
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>

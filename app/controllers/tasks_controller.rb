@@ -3,8 +3,14 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
+  #binding.pry
     if params[:sort_expired_at]
       @tasks = Task.all.order(expired_at: :desc)
+    elsif params[:title_search]
+      @tasks = Task.all.search(params[:title_search])
+    elsif params[:status_search]
+      #@tasks = Task.all.search(params[:status_search])
+      #@tasks = Task.where(status: params[:status_search])
     else
       @tasks = Task.all.order(id: :desc)
     end
@@ -42,6 +48,7 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
+    #binding.pry
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: "Task was successfully updated." }
@@ -62,6 +69,10 @@ class TasksController < ApplicationController
     end
   end
 
+  # def search
+  #   @tasks = Task.search(params[:title_search])
+  # end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -70,6 +81,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :content, :expired_at)
+      params.require(:task).permit(:title, :content, :expired_at, :status)
     end
 end
