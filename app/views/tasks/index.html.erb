@@ -49,3 +49,5 @@
 <%= link_to "終了期限(降順)でソートする", tasks_path(sort_expired_at: "true") %><br>
 <%= link_to "優先順位が高い順でソートする", tasks_path(sort_priority: "true") %><br>
 <%= link_to "作成日時(降順)でソートする", tasks_path %>
+<%= paginate @tasks %>
+

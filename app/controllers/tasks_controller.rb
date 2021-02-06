@@ -1,14 +1,16 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
+  PER = 15
 
   # GET /tasks or /tasks.json
   def index
   #binding.pry
     if params[:sort_expired_at]
-      @tasks = Task.all.order(expired_at: :desc)
-
+      #@tasks = Task.all.order(expired_at: :desc)
+      @tasks = Task.page(params[:page]).per(PER).order(expired_at: :desc)
     elsif params[:sort_priority]
-      @tasks = Task.all.order(priority: :desc)
+      #@tasks = Task.all.order(priority: :desc)
+      @tasks = Task.page(params[:page]).per(PER).order(priority: :desc)
 
     elsif params[:status_search] == "" && params[:title_search] == ""
       @tasks = Task.all.order(id: :desc)
@@ -28,7 +30,8 @@ class TasksController < ApplicationController
       #@tasks = Task.all.search(params[:status_search])
       #@tasks = Task.where(status: params[:status_search])
     else
-      @tasks = Task.all.order(id: :desc)
+      @tasks = Task.page(params[:page]).per(PER).order(id: :desc)
+      #@tasks = Task.all.order(id: :desc)
     end
   end
 
