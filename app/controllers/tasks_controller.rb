@@ -6,11 +6,25 @@ class TasksController < ApplicationController
   #binding.pry
     if params[:sort_expired_at]
       @tasks = Task.all.order(expired_at: :desc)
+
     elsif params[:sort_priority]
       @tasks = Task.all.order(priority: :desc)
-    elsif params[:title_search]
-      @tasks = Task.all.search(params[:title_search])
-    elsif params[:status_search]
+
+    elsif params[:status_search] == "" && params[:title_search] == ""
+      @tasks = Task.all.order(id: :desc)
+
+    elsif params[:status_search] && params[:title_search] == ""
+      @tasks = Task.status_search(params[:status_search])
+      #@tasks = Task.where(status: params[:status_search])
+
+    elsif params[:title_search] && params[:status_search] == ""
+      #@tasks = Task.where('title LIKE ?', "%#{params[:title_search]}%")
+      @tasks = Task.title_search(params[:title_search])  #※scope
+      
+    elsif params[:title_search] && params[:status_search]
+      @tasks = Task.status_search(params[:status_search]).title_search(params[:title_search])
+      #@tasks = Task.where('title LIKE ?', "%#{params[:title_search]}%").where(status: params[:status_search])
+    # elsif params[:status_search]
       #@tasks = Task.all.search(params[:status_search])
       #@tasks = Task.where(status: params[:status_search])
     else

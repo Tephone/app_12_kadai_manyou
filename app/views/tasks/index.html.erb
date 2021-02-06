@@ -7,8 +7,12 @@
   <div>タイトル検索</div>
   <%= text_field_tag :title_search %><br>
   <div>ステータス検索</div>
-  <%= text_field_tag :status_search %><br><br>
+  <%#<%= text_field_tag :status_search %>
+  <%= select_tag "status_search", options_for_select([[],["未了", 0],["対応中", 1],["完了", 2]]) %><br><br>
   <%= submit_tag 'search'%>
+  <%= form_tag(tasks_path, method: "get") do %>
+
+<% end %>
 <% end %>
 
 
