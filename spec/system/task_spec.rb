@@ -12,6 +12,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in 'Title',with: 'test3'
         fill_in 'Content',with: 'test3_content'
         #fill_in  'Expired at',with: '2021-02-10 12:22:22 +0900'
+        #fill_in 'Status',with: 2
+        select( value = '完了')
         click_on '登録する'
         #visit task_path
         expect(page).to have_content 'test3'
@@ -70,6 +72,11 @@ RSpec.describe 'タスク管理機能', type: :system do
       context 'タイトルであいまい検索をした場合' do
         it "検索キーワードを含むタスクで絞り込まれる" do
           visit tasks_path
+          fill_in 'title_search', with: '1'
+          click_on 'search'
+          expect(page).to have_content 'title1'
+          expect(page).to_not have_content 'title2'
+
           # タスクの検索欄に検索ワードを入力する (例: task)
           # 検索ボタンを押す
           #expect(page).to have_content 'task'
@@ -77,6 +84,12 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
       context 'ステータス検索をした場合' do
         it "ステータスに完全一致するタスクが絞り込まれる" do
+          visit tasks_path
+          select(value = '未了')
+          click_on 'search'
+          expect(page).to have_content 'title2'
+          expect(page).to_not have_content 'title1'
+          #binding.pry
           # ここに実装する
           # プルダウンを選択する「select」について調べてみること
         end
@@ -84,6 +97,12 @@ RSpec.describe 'タスク管理機能', type: :system do
       context 'タイトルのあいまい検索とステータス検索をした場合' do
         it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
           # ここに実装する
+          visit tasks_path
+          fill_in 'title_search', with: 'title'
+          select(value = '未了')
+          click_on 'search'
+          expect(page).to have_content 'title2'
+          expect(page).to_not have_content 'title1'
         end
       end
     end
