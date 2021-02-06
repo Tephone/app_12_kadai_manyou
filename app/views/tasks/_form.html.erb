@@ -26,9 +26,14 @@
     <%= form.datetime_field :expired_at %>
   </div>
 
-   <div class="field">
+  <div class="field">
     <%= form.label :status %>
     <%= form.select :status, Task.statuses.keys.to_a, { include_blank: '選択してください'} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.select :priority, Task.priorities.keys.to_a, { include_blank: '選択してください'} %>
   </div>
 
   <div class="actions">

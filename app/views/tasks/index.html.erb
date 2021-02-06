@@ -19,7 +19,8 @@
       <th>Content</th>
       <th>Expired_at</th>
       <th>Status</th>
-      <th colspan="4"></th>
+      <th>Priority</th>
+      <th colspan="5"></th>
     </tr>
   </thead>
   <tbody>
@@ -29,6 +30,7 @@
         <td><%= task.content %></td>
         <td><%= task.expired_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= task.status %></td>
+        <td><%= task.priority %></td>
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -41,4 +43,5 @@
 
 <%= link_to 'New Task', new_task_path %><br>
 <%= link_to "終了期限(降順)でソートする", tasks_path(sort_expired_at: "true") %><br>
+<%= link_to "優先順位が高い順でソートする", tasks_path(sort_priority: "true") %><br>
 <%= link_to "作成日時(降順)でソートする", tasks_path %>

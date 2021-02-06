@@ -6,6 +6,8 @@ class TasksController < ApplicationController
   #binding.pry
     if params[:sort_expired_at]
       @tasks = Task.all.order(expired_at: :desc)
+    elsif params[:sort_priority]
+      @tasks = Task.all.order(priority: :desc)
     elsif params[:title_search]
       @tasks = Task.all.search(params[:title_search])
     elsif params[:status_search]
@@ -81,6 +83,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :content, :expired_at, :status)
+      params.require(:task).permit(:title, :content, :expired_at, :status, :priority)
     end
 end

@@ -1,11 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Status:</strong>
-  <%= @task.status %>
-</p>
-
-<p>
   <strong>Title:</strong>
   <%= @task.title %>
 </p>
@@ -20,6 +15,15 @@
   <%= @task.expired_at.strftime("%Y-%m-%d %H:%M:%S") %>
 </p>
 
+<p>
+  <strong>Status:</strong>
+  <%= @task.status %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @task.priority %>
+</p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
