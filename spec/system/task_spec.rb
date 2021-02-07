@@ -11,7 +11,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'Title',with: 'test3'
         fill_in 'Content',with: 'test3_content'
-        #fill_in  'Expired at',with: '2021-02-10 12:22:22 +0900'
+        fill_in  'Expired at',with: '2021-02-19-00:00:00'
         #fill_in 'Status',with: 2
         select( value = '完了')
         click_on '登録する'

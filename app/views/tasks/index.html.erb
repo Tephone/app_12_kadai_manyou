@@ -1,29 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= t('view.task') %></h1>
-
-<p>search</p>
+<%#<%= t('view.task') %>
+<br><br>
 <%= form_tag(tasks_path, method: :get) do%>
   <div>タイトル検索</div>
   <%= text_field_tag :title_search %><br>
+  
   <div>ステータス検索</div>
   <%#<%= text_field_tag :status_search %>
   <%= select_tag "status_search", options_for_select([[],["未了", 0],["対応中", 1],["完了", 2]]) %><br><br>
-  <%= submit_tag 'search'%>
-  <%= form_tag(tasks_path, method: "get") do %>
-
-<% end %>
+  <%= submit_tag 'search'%><br><br>
 <% end %>
 
 
-<table>
+
+<table  class="table table-hover" >
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Expired_at</th>
-      <th>Status</th>
-      <th>Priority</th>
+      <th class = "go_center">Title</th>
+      <th class = "go_center">Content</th>
+      <th class = "go_center">term </th>
+      <th class = "go_center">Status</th>
+      <th class = "go_center">Priority</th>
       <th colspan="5"></th>
     </tr>
   </thead>
@@ -35,9 +33,9 @@
         <td><%= task.expired_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', task %> &thinsp; </td>
+        <td><%= link_to 'Edit', edit_task_path(task) %> &thinsp; </td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %> &thinsp; </td>
       </tr>
     <% end %>
   </tbody>
@@ -45,9 +43,9 @@
 
 <br>
 
-<%= link_to 'New Task', new_task_path %><br>
+<%= link_to 'New Task', new_task_path, class:"btn btn-default" %><br><br>
 <%= link_to "終了期限(降順)でソートする", tasks_path(sort_expired_at: "true") %><br>
 <%= link_to "優先順位が高い順でソートする", tasks_path(sort_priority: "true") %><br>
-<%= link_to "作成日時(降順)でソートする", tasks_path %>
+<%= link_to "作成日時(降順)でソートする", tasks_path %><br>
 <%= paginate @tasks %>
 
