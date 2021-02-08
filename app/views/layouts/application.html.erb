@@ -9,7 +9,14 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class = "wrapper">
+    <header>
+      <img src = '/kuma.jpg', class = "img_hed">
+    </header>
+    <div class = "main_body">
+      <div class = "go_center" >
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
