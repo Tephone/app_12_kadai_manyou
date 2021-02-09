@@ -2,8 +2,10 @@ require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
-    @task1 = FactoryBot.create(:task)
-    @task2 = FactoryBot.create(:second_task)
+     @task1 = FactoryBot.create(:task)
+     @task2 = FactoryBot.create(:second_task)
+    # @task1 = let(:task) { FactoryBot.create(:task) }
+    # @task2 = let(:second_task) { FactoryBot.create(:second_task) }
   end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do

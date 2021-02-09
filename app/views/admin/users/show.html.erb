@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+<br>
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+<br>
+<table  class="table table-hover" >
+  <thead>
+    <tr>
+      <th class = "go_center">Title</th>
+      <th class = "go_center">Content</th>
+      <th class = "go_center">term </th>
+      <th class = "go_center">Status</th>
+      <th class = "go_center">Priority</th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.content %></td>
+        <td><%= task.expired_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= task.status %></td>
+        <td><%= task.priority %></td>
+        <td><%= link_to 'Show', task %> &thinsp; </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', admin_users_path %>
