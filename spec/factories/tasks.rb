@@ -5,15 +5,17 @@ FactoryBot.define do
         id {1}
         expired_at{'2021/02/19'}
         status{2} #{ 未了: 0, 対応中: 1, 完了: 2 }
-        association :user
-      end
+        # association :user
+        #user { association :user }
+    end
 
-      factory :second_task, class: Task do
-        title { 'title2' }
-        content { 'title2_content' }
-        id{2}
-        expired_at{'2021/02/01'}
-        status{0} #{ 未了: 0, 対応中: 1, 完了: 2 }
-        association :user2
-      end
+    factory :second_task, class: Task do
+      title { 'title2' }
+      content { 'title2_content' }
+      id{2}
+      expired_at{'2021/02/01'}
+      status{0} #{ 未了: 0, 対応中: 1, 完了: 2 }
+      # association :user
+      #user { association :user }
+    end
 end
