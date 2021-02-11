@@ -15,16 +15,12 @@ class User < ApplicationRecord
             throw(:abort)
         end
     end
+
     def not_update_by_self
-        #binding.pry
-        if self.admin && User.where(admin: true).count == 1
-            if admin == false
+        if changes.has_key?('admin') && User.find(self.id).admin && User.where(admin: true).count == 1
+            unless changes['admin'].select { |val| !!val }.count == changes['admin'].count # unless changes['admin'].last
                 throw(:abort)
             end
         end
     end
-    # before_destroy :not_destroy_by_self, only: %i[ update destroy ]
- 
-            
-
 end
