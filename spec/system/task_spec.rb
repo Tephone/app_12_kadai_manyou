@@ -2,19 +2,32 @@ require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
-    @task1 = FactoryBot.create(:task)
-    @task2 = FactoryBot.create(:second_task)
+     user = FactoryBot.create(:user)
+     @task1 = FactoryBot.create(:task, user_id: user.id)
+     @task2 = FactoryBot.create(:second_task, user_id: user.id)
+     
+     visit new_session_path
+     fill_in 'Email', with: 'one@example.com'
+     fill_in 'Password', with: 'aaaaaa'
+     click_on 'Log in'
+     
+     
+    # @task1 = let(:task) { FactoryBot.create(:task) }
+    # @task2 = let(:second_task) { FactoryBot.create(:second_task) }
   end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
+        
         visit new_task_path
         fill_in 'Title',with: 'test3'
         fill_in 'Content',with: 'test3_content'
         fill_in  'Expired at',with: '2021-02-19-00:00:00'
         #fill_in 'Status',with: 2
         select( value = '完了')
+        
         click_on '登録する'
+        #binding.pry
         #visit task_path
         expect(page).to have_content 'test3'
       end
@@ -28,6 +41,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
         # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
         expect(page).to have_content 'title1'
+        #binding.pry
         expect(page).to have_content 'title2'
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end

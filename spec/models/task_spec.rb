@@ -2,19 +2,23 @@ require 'rails_helper'
 describe 'タスクモデル機能', type: :model do
   before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
-    @task1 = FactoryBot.create(:task)
-    @task2 = FactoryBot.create(:second_task)
+    @user = FactoryBot.create(:user)
+    @task1 = FactoryBot.create(:task, user_id: @user.id)
+    @task2 = FactoryBot.create(:second_task, user_id: @user.id)
+    # FactoryBot.create(:user)
+    # @task1 = FactoryBot.create(:task)
+    # @task2 = FactoryBot.create(:second_task)
   end
   describe 'バリデーションのテスト' do
     context 'タスクのタイトルが空の場合' do
       it 'バリデーションにひっかる' do
-        task = Task.new(title: nil, content: '失敗テスト')
+        task = Task.new(title: nil, content: '失敗テスト', user_id: @user.id)
         expect(task).not_to be_valid
       end
     end
     context 'タスクの詳細が空の場合' do
       it 'バリデーションにひっかかる' do
-        task = Task.new(title: '失敗テスト', content: nil)
+        task = Task.new(title: '失敗テスト', content: nil, user_id: @user.id)
         expect(task).not_to be_valid
         #task = Task.new(title: nil)
         #task.valid?
@@ -24,7 +28,9 @@ describe 'タスクモデル機能', type: :model do
     end
     context 'タスクのタイトルと詳細に内容が記載されている場合' do
       it 'バリデーションが通る' do
-        task = Task.new(title: '成功title', content: "成功content")
+        #user_id= @user.id
+        task = Task.new(title: '成功title', content: "成功content", user_id: @user.id)
+        
         #visit task_path(task.id)
         #expect(task).to has_content '成功title'
         expect(task).to be_valid
