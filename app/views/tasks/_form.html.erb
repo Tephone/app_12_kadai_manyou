@@ -35,7 +35,23 @@
     <%= form.label :priority %>
     <%= form.select :priority, Task.priorities.keys.to_a, { include_blank: '選択してください'} %>
   </div>
-
+  <br>
+  <%#<%= form.fields_for :tagging_ids do |tags| %>
+    <%#<div class="field">
+      <%= tags.collection_check_boxes(:tagging_ids, Tag.all, :id, :tag_name, include_hidden: false) %>
+    <%#<div>
+  <% end %>
+  <%#<%= tags.collection_check_boxes(:tagging_ids, @current_tag, :id, :tag_name, include_hidden: false) %>
+  
+  <%#<%= form.fields_for :tagging_ids do |tags| %>
+      <%#<%= tags.check_box :tagging_ids, {multiple: true, checked: @task.tagging_tags.find_by[id: tags.id], include_hidden: false}, tags[:id]%>
+  <%#<% end %>
+  <%= form.collection_check_boxes(:tag_ids, Tag.all, :id, :tag_name, include_hidden: false) %>
+  <%#<% Tag.all.each do |tag|%>
+    <%#<%= form.check_box :tag_ids, { multiple: true, checked: tag[:checked], disabled: tag[:disabled], include_hidden: false }, tag[:id] %>
+    <%#<%= tag.tag_name%>
+  <%#<% end %>
+  <br>
   <div class="actions">
     <%= form.submit %>
   </div>

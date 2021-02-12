@@ -1,7 +1,12 @@
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :tagging, dependent: :destroy
+  has_many :tags, through: :tagging, source: :tag
+  #accepts_nested_attributes_for :tagging
+
   validates :title, presence: true
   validates :content, presence: true
+  
   enum status: { 未了: 0, 対応中: 1, 完了: 2 }
   enum priority: { 低: 0, 中: 1, 高: 2 }
 

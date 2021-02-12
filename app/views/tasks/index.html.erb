@@ -9,10 +9,14 @@
   <div>ステータス検索</div>
   <%#<%= text_field_tag :status_search %>
   <%= select_tag "status_search", options_for_select([[],["未了", 0],["対応中", 1],["完了", 2]]) %><br><br>
+  <%#<%= select :tag_id, Tag.all.collect { |p| [ p.tag_name, p.id ] }, include_blank: true %>
+  
   <%= submit_tag 'search'%><br><br>
 <% end %>
-
-
+<%= form_with url: tasks_path, method: :get, local: true do |form| %>
+  <%= form.select("tag_id", Tag.pluck(:tag_name, :id), { include_blank: true }) %><br><br>
+  <%= form.submit 'tag-search', name: nil %>
+<% end %>
 
 <table  class="table table-hover" >
   <thead>
@@ -22,7 +26,8 @@
       <th class = "go_center">term </th>
       <th class = "go_center">Status</th>
       <th class = "go_center">Priority</th>
-      <th colspan="5"></th>
+      <th class = "go_center">Tag</th>
+      <th colspan="6"></th>
     </tr>
   </thead>
   <tbody>
@@ -33,6 +38,11 @@
         <td><%= task.expired_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
+        <td>
+        <% (task.tags).each do |tag| %>
+          <%= tag.tag_name %>
+        <% end %>
+        </td>
         <td><%= link_to 'Show', task %> &thinsp; </td>
         <td><%= link_to 'Edit', edit_task_path(task) %> &thinsp; </td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %> &thinsp; </td>
@@ -47,5 +57,5 @@
 <%= link_to "終了期限(降順)でソートする", tasks_path(sort_expired_at: "true") %><br>
 <%= link_to "優先順位が高い順でソートする", tasks_path(sort_priority: "true") %><br>
 <%= link_to "作成日時(降順)でソートする", tasks_path %><br>
-<%= paginate @tasks %>
+<%#<%= paginate @tasks %>
 
