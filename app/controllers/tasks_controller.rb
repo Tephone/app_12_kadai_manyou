@@ -15,7 +15,6 @@ class TasksController < ApplicationController
       @tasks = current_user.tasks.page(params[:page]).per(PER).order(priority: :desc)
 
     elsif params[:tag_id]
-      puts "@@@@@@@@@@@@@@@"
       if params[:tag_id] != ""
         #@tasks = current_user.tasks.page(params[:page]).per(PER).order(id: :desc)
         @tasks = Tag.find(params[:tag_id]).tasks.page(params[:page]).per(PER) 
