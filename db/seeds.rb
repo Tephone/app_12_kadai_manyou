@@ -5,8 +5,27 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create!(name:  "admin9",
-             email: "admin9@example.com",
+User.create!(name:  "admin",
+             email: "admin@example.com",
              password:  "aaaaaa",
              password_confirmation: "aaaaaa",
              admin: true)
+
+9.times do |n|
+User.create!(
+    email: "tarou#{n + 1}@example.com",
+    name: "tarou#{n + 1}",
+    password:  "aaaaaa",
+    password_confirmation: "aaaaaa" )
+end
+
+User.all.each do |user|
+    user.tasks.create!(
+      title: 'タイトル',
+      content: 'テキスト'
+    )
+end
+    
+10.times do |i|
+    Tag.create!(tag_name: "example#{i + 1}")
+end

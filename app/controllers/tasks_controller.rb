@@ -14,6 +14,17 @@ class TasksController < ApplicationController
       #@tasks = Task.all.order(priority: :desc)
       @tasks = current_user.tasks.page(params[:page]).per(PER).order(priority: :desc)
 
+    elsif params[:tag_id]
+      if params[:tag_id] != ""
+        #@tasks = current_user.tasks.page(params[:page]).per(PER).order(id: :desc)
+        @tasks = Tag.find(params[:tag_id]).tasks.page(params[:page]).per(PER) 
+      else
+        #@tasks = Tag.find(params[:tag_id]).tasks.page(params[:page]).per(PER) 
+        @tasks = current_user.tasks.page(params[:page]).per(PER).order(id: :desc)
+      end
+        
+      #@tasks = Tag.find(params[:tag_id]).tasks
+
     elsif params[:status_search] == "" && params[:title_search] == ""
       #@tasks = Task.all.order(id: :desc)
       @tasks = current_user.tasks.page(params[:page]).per(PER).order(id: :desc)
@@ -33,6 +44,7 @@ class TasksController < ApplicationController
       #@tasks = Task.status_search(params[:status_search]).title_search(params[:title_search]) #scope
       #@tasks = Task.where('title LIKE ?', "%#{params[:title_search]}%").where(status: params[:status_search]) #default
       @tasks = current_user.tasks.page.status_search(params[:status_search]).title_search(params[:title_search]).per(PER)
+   
     else
       @tasks = current_user.tasks.page(params[:page]).per(PER).order(id: :desc)
       #@tasks = Task.page(params[:page]).per(PER).order(id: :desc) #全てのユーザーのtask見れる
@@ -55,9 +67,13 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
-    @task.user_id = current_user.id
-
+    #binding.pry
+    @task = current_user.tasks.new(task_params) #１
+    #binding.pry
+    #@task.tagging_ids.build
+    #@task = Task.new(task_params) 
+    #@task.user_id = current_user.id #１と同じ意味(association使ってない)
+      
     #respond_to do |format|
       if @task.save
         redirect_to task_path(@task.id), notice: "Task was successfully created."
@@ -106,7 +122,7 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :content, :expired_at, :status, :priority)
+      params.require(:task).permit(:title, :content, :expired_at, :status, :priority, tag_ids: [])
     end
     def go_login
       unless logged_in?

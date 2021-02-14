@@ -25,5 +25,12 @@
   <%= @task.priority %>
 </p>
 
+  <strong>Tag</strong><br>
+<P class="label label-default">
+  <% (@task.tags).each do |tag| %>
+    &thinsp; <%= tag.tag_name%> &thinsp; <br>
+  <% end %>
+</p>
+<br>
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
